@@ -3,7 +3,7 @@
 # check if user exists
 username="cerealk"
 passwordFileName="important_passwords.csv"
-# head -n -1 foo.txt > temp.txt ; mv temp.txt foo.txt
+backupFileDir="backup"
 
 
 if id "$username" >/dev/null 2>&1; then
@@ -16,6 +16,7 @@ if id "$username" >/dev/null 2>&1; then
     mv /tmp/$passwordFileName ./.hidden/
     # remove line from host name
     head -n -1 /etc/hosts > /etc/temphosts; mv /etc/temphosts /etc/hosts
+
     echo "File clean up complete!"
 else
     # create files
@@ -23,11 +24,19 @@ else
     echo '...'
 
     # create user
-    useradd -c "Timothy Lybeck" -d /home/cerealk/ -m -p "C3r3alK1ll3r" cerealk
+    useradd -c "Timothy Lybeck" -d /home/$username/ -m -p "C3r3alK1ll3r" cerealk
+    # create trash folder if not there
+    mkdir -p /home/$username/.local/share/Trash
     # create hidden password file
     mv ./.hidden/$passwordFileName /tmp/
     # create host name addition
     echo "74.179.83.108 ck-anon" >> /etc/hosts
+    # create backup files
+    cd .hidden
+    tar -cvf $backupFileDir.tar $backupFileDir/
+    gzip -v $backupFileDir.tar
+    cd ..
+    mv .hidden/$backupFileDir.tar.gz /home/$username/.local/share/Trash/
 
     echo "Scenario ready!"
     
