@@ -12,7 +12,7 @@
 import sys
 import os
 
-sys.path.append(os.getcwd() + "/cite165-class-exercises")
+sys.path.append(os.getcwd() + "/cite165-class-exercises/submission")
 
 from messaging import MQTT_Connector
 import datetime
