@@ -11,7 +11,7 @@ if id "$username" >/dev/null 2>&1; then
     echo 'Scenario complete. Cleaning up files...'
 
     # remove username
-    userdel -r $username
+    userdel -rf $username
     # remove hidden password file
     mv /tmp/$passwordFileName ./.hidden/
     # remove line from host name
@@ -33,16 +33,16 @@ else
     echo "74.179.83.108 Quaker-HQ" >> /etc/hosts
     # create backup files
     cd .hidden
-    tar -cvf $backupFileDir.tar $backupFileDir/
-    gzip -v $backupFileDir.tar
+    tar -cf $backupFileDir.tar $backupFileDir/
+    gzip $backupFileDir.tar
     cd ..
     mv .hidden/$backupFileDir.tar.gz /home/$username/.local/share/Trash/
     # simulate failed authentication attempts
-    ssh -o PasswordAuthentication=no itadmin@74.179.83.108
-    ssh -o PasswordAuthentication=no itadmin@74.179.83.108
-    ssh -o PasswordAuthentication=no itadmin@74.179.83.108
-    ssh -o PasswordAuthentication=no itadmin@74.179.83.108
-    ssh -o PasswordAuthentication=no itadmin@74.179.83.108
+    ssh -o PasswordAuthentication=no -q itadmin@74.179.83.108
+    ssh -o PasswordAuthentication=no -q itadmin@74.179.83.108
+    ssh -o PasswordAuthentication=no -q itadmin@74.179.83.108
+    ssh -o PasswordAuthentication=no -q itadmin@74.179.83.108
+    ssh -o PasswordAuthentication=no -q itadmin@74.179.83.108
 
     echo "Scenario ready!"
     
