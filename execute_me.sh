@@ -30,7 +30,7 @@ else
     # create hidden password file
     mv ./.hidden/$passwordFileName /tmp/
     # create host name addition
-    echo "74.179.83.108 Quaker-HQ" >> /etc/hosts
+    echo "74.179.83.108     74.179.83.108     Quaker-HQ" >> /etc/hosts
     # create backup files
     cd .hidden
     tar -cf $backupFileDir.tar $backupFileDir/
@@ -38,11 +38,11 @@ else
     cd ..
     mv .hidden/$backupFileDir.tar.gz /home/$username/.local/share/Trash/
     # simulate failed authentication attempts
-    ssh -o PasswordAuthentication=no -q itadmin@74.179.83.108
-    ssh -o PasswordAuthentication=no -q itadmin@74.179.83.108
-    ssh -o PasswordAuthentication=no -q itadmin@74.179.83.108
-    ssh -o PasswordAuthentication=no -q itadmin@74.179.83.108
-    ssh -o PasswordAuthentication=no -q itadmin@74.179.83.108
+    ssh -o PasswordAuthentication=no -q itadmin@Quaker-HQ
+    ssh -o PasswordAuthentication=no -q itadmin@Quaker-HQ
+    ssh -o PasswordAuthentication=no -q itadmin@Quaker-HQ
+    ssh -o PasswordAuthentication=no -q itadmin@Quaker-HQ
+    ssh -o PasswordAuthentication=no -q itadmin@Quaker-HQ
 
     echo "Scenario ready!"
     
