@@ -12,12 +12,28 @@
 import sys
 import os
 
+# allows for moving of the submit.py file and still finding library
 sys.path.append(os.getcwd() + "/cite165-class-exercises/submission")
 sys.path.append(os.getcwd() + "/.cite165-class-exercises/submission")
 
 from messaging import MQTT_Connector
 import datetime
 
+def grab_guess(question:str):
+    """
+    Grab input from the terminal based on a question to ask.
+
+    :param question: string, prompt to ask
+    :return: capitalized version of input
+    """
+    choice = 'n'
+    while choice != 'y' and choice != 'yes':
+        answer = input(f'\n{question} _ ')
+        choice = input(f"{answer}. Is this correct? y/n _ ")
+        choice = choice.lower()
+    
+    answer = answer.capitalize()
+    return answer
 
 print("Congratulations for completing the activity. There are a few questions you should answer.")
 guess = {}
@@ -26,49 +42,19 @@ timestamp = datetime.datetime.now()
 guess["time"] = timestamp
 
 # name
-choice = 'n'
-while choice != "y" and choice != "yes" :
-    student_name = input("\nWhat is your name? _ ")
-    choice = input(f"{student_name}. Is this correct? y/n _ ")
-    choice = choice.lower()
-
-guess['student_name'] = student_name.capitalize()
+guess['student_name'] = grab_guess("What is your name?")
 
 # killer guess
-choice = 'n'
-while choice != "y" and choice != "yes" :
-    killer_guess = input("\nWhat is the name of the cereal killer? _ ")
-    choice = input(f"{killer_guess}. Is this correct? y/n _ ")
-    choice = choice.lower()
-
-guess['killer_guess'] = killer_guess.capitalize()
+guess['killer_guess'] = grab_guess("What is the name of the cereal killer?")
 
 # attack location guess
-choice = 'n'
-while choice != "y" and choice != "yes" :
-    location = input("\nWhere is the cereal killer going to attack next? _ ")
-    choice = input(f"{location}. Is this correct? y/n _ ")
-    choice = choice.lower()
-
-guess['location'] = location.capitalize()
+guess['location'] = grab_guess("Where is the cereal killer going to attack next?")
 
 # home base guess
-choice = 'n'
-while choice != "y" and choice != "yes" :
-    home = input("\nBonus! Where is his home base? _ ")
-    choice = input(f"{home}. Is this correct? y/n _ ")
-    choice = choice.lower()
-
-guess['home'] = home.capitalize()
+guess['home'] = grab_guess("Bonus! Where is his home base?")
 
 # leader guess
-choice = 'n'
-while choice != "y" and choice != "yes" :
-    leader = input("\nBonus! Who is really in charge? _ ")
-    choice = input(f"{leader}. Is this correct? y/n _ ")
-    choice = choice.lower()
-
-guess['leader'] = leader.capitalize()
+guess['leader'] = grab_guess("Bonus! Who is really in charge?")
 
 
 formatted_guess = f"""
@@ -88,6 +74,7 @@ student.connect_MQTT()
 
 student.loop_start()
 student.publishMessage('cite165', string_guess)
+
 print(formatted_guess)
 
 student.loop_stop
